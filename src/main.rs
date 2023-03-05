@@ -1,4 +1,5 @@
 use std::env;
+use std::convert::TryInto;
 use std::fs::File;
 use std::io::{self, BufRead, Write};
 
@@ -29,9 +30,9 @@ fn climbingLeaderboard(ranked: &[i32], player: &[i32]) -> Vec<i32> {
             i -= 1;
         }
         if *score >= unique_ranked[i] {
-            positions.push(i + 1);
+            positions.push((i + 1).try_into().unwrap());
         } else {
-            positions.push(i + 2);
+            positions.push((i + 2).try_into().unwrap());
         }
     }
 
