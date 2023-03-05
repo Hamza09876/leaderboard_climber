@@ -12,7 +12,30 @@ use std::io::{self, BufRead, Write};
  */
 
 fn climbingLeaderboard(ranked: &[i32], player: &[i32]) -> Vec<i32> {
+    let mut positions:Vec<i32> = vec![];
+    let mut unique_ranked = vec![ranked[0]];
 
+    // Remove duplicates from the ranked scores
+    for i in 1..ranked.len() {
+        if ranked[i] != ranked[i-1] {
+            unique_ranked.push(ranked[i]);
+        }
+    }
+
+    // Traverse the unique ranked scores in reverse order
+    let mut i = unique_ranked.len() - 1;
+    for score in player {
+        while i > 0 && *score > unique_ranked[i] {
+            i -= 1;
+        }
+        if *score >= unique_ranked[i] {
+            positions.push(i + 1);
+        } else {
+            positions.push(i + 2);
+        }
+    }
+
+    positions
 }
 
 fn main() {
